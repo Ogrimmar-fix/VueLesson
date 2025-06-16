@@ -15,8 +15,8 @@ export default {
 
 <template>
   <div>
-    <label>
-      <input type="checkbox" class="checkbox" :checked="isChecked" @input="onCheckboxChange" />
+    <label class="checkbox">
+      <input name="element" type="checkbox" :checked="isChecked" @input="onCheckboxChange" />
       <span :class="{ 'strikethrough': isChecked }" >
         {{ element }}
       </span>
