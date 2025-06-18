@@ -7,69 +7,64 @@ export default {
   },
   data() {
     return {
-      currentId: 2,
-      nameBox: ['One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten'],
-      rowsDelo: [
+      selectedText: '',
+      listRecords: [
         {
           id: 1,
-          name: 'DeloOne',
-          isRemoved: true,
+          name: 'Забрать ребенка из школы.',
         },
         {
           id: 2,
-          name: 'DeloTwo',
-          isRemoved: false,
+          name: 'Купить лекарства.',
+        },
+        {
+          id: 3,
+          name: 'Записаться к врачу.',
+        },
+        {
+          id: 4,
+          name: 'Приготовить обед',
         },
       ],
     }
   },
   methods: {
-    crossOut(id: number, value: boolean) {
-      const element = this.rowsDelo.find(x => x.id === id);
-      if (!element) {
-        return;
-      }
-
-      element.isRemoved = value;
-      console.log(this.rowsDelo, 'this.rowsDelo');
+    clickRecord(text: string) {
+      this.selectedText = text
     },
-    remove(id: number) {
-      this.rowsDelo = this.rowsDelo.filter((elem) => {
-        return elem.id !== id
-      })
-    },
-    addLine() {
-      const newIndex = this.currentId++;
-      let newName = 'Delo ';
-      const numberStringValue = this.nameBox[newIndex];
-      console.log(newIndex, 'newIndex');
-      newName += numberStringValue ? numberStringValue : newIndex;
-
-      this.rowsDelo.push({
-        id: newIndex,
-        name: newName,
-        isRemoved: false,
-      })
+    applyChange() {
+      this.listRecords.name = this.selectedText
     },
   },
 }
 </script>
 
 <template>
-  <MyEmployee
-    class="parent"
-    v-for="elem in rowsDelo"
-    :key="elem.id"
-    :element="elem.name"
-    :id="elem.id"
-    :isChecked="elem.isRemoved"
-    @remove="remove"
-    @cross-out="crossOut"
-  />
-  <button @click="addLine">Добавить</button>
+  <div class="row">
+    <div class="row-child">
+      <MyEmployee
+        v-for="record in listRecords"
+        :key="record.id"
+        :name="record.name"
+        @clicker="clickRecord(record.name)"
+      />
+    </div>
+    <div>
+      <textarea v-model="selectedText" @keyup.enter="applyChange" class="area"></textarea>
+      <button @click="selectedText = ''">Очистить</button>
+    </div>
+  </div>
 </template>
 <style>
-.parent {
-  margin: auto;
+.row {
+  display: flex;
+
+  justify-content: space-between;
+}
+.row-child {
+  margin-right: 10px;
+}
+.area {
+  margin-right: 10px;
 }
 </style>

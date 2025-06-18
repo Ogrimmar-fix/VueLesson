@@ -1,30 +1,15 @@
 <script lang="ts">
 export default {
-  props: { element: String, id: Number, isChecked: Boolean },
-  emits: ['remove', 'cross-out'],
-  methods: {
-    onCheckboxChange(e) {
-      this.$emit('cross-out', this.id, e.target.checked)
-    }
-  },
-  mounted() {
-    console.log(this.isChecked, 'isChecked');
-  }
+  props: { name: String },
+  emits: ['clicker'],
+  methods: {},
 }
 </script>
 
 <template>
-  <div>
-    <label>
-      <input type="checkbox" class="checkbox" :checked="isChecked" @input="onCheckboxChange" />
-      <span :class="{ 'strikethrough': isChecked }" >
-        {{ element }}
-      </span>
-    </label>
-  </div>
-  <div id="child">
-    <button @click="$emit('remove', id)">Удалить</button>
-  </div>
+  <ul>
+    <li @click="$emit('clicker', name)">{{ name }}</li>
+  </ul>
 </template>
 
 <style>
@@ -32,7 +17,14 @@ export default {
   text-decoration: line-through;
 }
 
-.checkbox {
+li {
+  color: black;
   cursor: pointer;
+}
+textarea {
+  color: black;
+}
+li:hover {
+  background: #f0f0f0;
 }
 </style>
