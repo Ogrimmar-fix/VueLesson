@@ -56,6 +56,7 @@ export default {
 </script>
 
 <template>
+  123
   <MyEmployee
     class="parent"
     v-for="elem in rowsDelo"
