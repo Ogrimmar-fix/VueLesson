@@ -8,6 +8,7 @@ export default {
   data() {
     return {
       selectedText: '',
+      selectedItem: 0,
       listRecords: [
         {
           id: 1,
@@ -29,11 +30,13 @@ export default {
     }
   },
   methods: {
-    clickRecord(text: string) {
+    clickRecord(text: string, id: number) {
       this.selectedText = text
+      this.selectedItem = id
     },
-    applyChange() {
-      this.listRecords.name = this.selectedText
+    addText() {
+      const result = this.listRecords.find((element) => element.id === this.selectedItem)
+      result.name = this.selectedText
     },
   },
 }
@@ -44,13 +47,15 @@ export default {
     <div class="row-child">
       <MyEmployee
         v-for="record in listRecords"
+        :index="record.id"
         :key="record.id"
         :name="record.name"
-        @clicker="clickRecord(record.name)"
+        @clicker="clickRecord(record.name, record.id)"
       />
     </div>
     <div>
-      <textarea v-model="selectedText" @keyup.enter="applyChange" class="area"></textarea>
+      <textarea v-model="selectedText" class="area"></textarea>
+      <button @click="addText">Добавить</button>
       <button @click="selectedText = ''">Очистить</button>
     </div>
   </div>

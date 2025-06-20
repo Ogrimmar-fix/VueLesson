@@ -1,6 +1,6 @@
 <script lang="ts">
 export default {
-  props: { name: String },
+  props: { name: String, index: Number },
   emits: ['clicker'],
   methods: {},
 }
@@ -8,7 +8,7 @@ export default {
 
 <template>
   <ul>
-    <li @click="$emit('clicker', name)">{{ name }}</li>
+    <li @click="$emit('clicker', name, index)">{{ name }}</li>
   </ul>
 </template>
 
