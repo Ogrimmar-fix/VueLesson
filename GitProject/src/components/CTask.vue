@@ -1,14 +1,14 @@
-<script lang="ts">
-export default {
-  props: { name: String, index: Number },
-  emits: ['clicker'],
-  methods: {},
-}
+<script setup lang="ts">
+  defineProps({
+    name: String,
+    index: Number
+  });
+  const emit = defineEmits(['clicker', 'add'])
 </script>
 
 <template>
   <ul>
-    <li @click="$emit('clicker', name, index)">{{ name }}</li>
+    <li @click="emit('clicker', name, index)">{{ name }}</li>
   </ul>
 </template>
 
