@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref } from 'vue'
 import CTask from './components/CTask.vue'
 
 // Refs
-const selectedItem = ref({});
+const selectedItem = ref({})
 const listRecords = ref([
   {
     id: 1,
@@ -21,22 +21,32 @@ const listRecords = ref([
     id: 4,
     name: 'Приготовить обед',
   },
-]);
+])
 
 // Functions
 function clickRecord(record: object) {
   selectedItem.value = { ...record }
-};
+}
 
-function
- addText() {
+function addText() {
   const result = listRecords.value.find((element) => element.id === selectedItem.value.id)
   if (!result) {
-    return;
+    return
   }
 
   result.name = selectedItem.value.name
-};
+}
+
+function addItem() {
+  listRecords.value.push({ id: 5, name: '' })
+}
+function removeItem(element) {
+  console.log(selectedItem.value.id, 'selectedItem.value.id')
+  listRecords.value = listRecords.value.filter(() => {
+    return selectedItem.value.id !== element.id
+  })
+  console.log(element.id, 'element.id')
+}
 </script>
 
 <template>
@@ -48,7 +58,9 @@ function
         :key="record.id"
         :name="record.name"
         @clicker="clickRecord(record)"
+        @remove="removeItem(record)"
       />
+      <button @click="addItem">Добавить задачу</button>
     </div>
     <div>
       <textarea v-model="selectedItem.name" class="area"></textarea>
